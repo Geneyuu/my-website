@@ -1,172 +1,347 @@
+menu Pixeldrain taenamo.html Views 29 Downloads 46 Size 8.60 kB download
+Download content_copy Copy link share Share qr_code QR code fullscreen
+Fullscreen help Details flag Report code Embed
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Automatic Ad Viewer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>OMG</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+		/>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
 
-        body {
-            font-family: "Orbitron", sans-serif;
-            background-color: #0d0d0d;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+			body {
+				font-family: "Orbitron", sans-serif;
+				background-color: #1a1a1a;
+				color: #ffffff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+				overflow: hidden;
+				transition: background-color 0.3s, color 0.3s;
+			}
 
-        /* Modal Styling */
-        .modal {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
+			.modal {
+				display: none;
+				position: fixed;
+				z-index: 1000;
+				left: 0;
+				top: 0;
+				width: 100vw; /* Full viewport width */
+				height: 100vh; /* Full viewport height */
+				background: radial-gradient(
+					circle at top left,
+					rgba(73, 237, 0, 0.3),
+					rgba(0, 0, 0, 0.85)
+				);
+				align-items: center;
+				justify-content: center;
+				animation: zoomIn 0.5s ease forwards;
+			}
 
-        .modal-content {
-            background-color: #1a1a1a;
-            width: 80%;
-            max-width: 500px;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            color: #e0e0e0;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+			.modal-content {
+				background-color: #212121;
+				width: 100%; /* Full width */
+				height: 100%; /* Full height */
+				border-radius: 0; /* Remove rounded corners */
+				text-align: center;
+				position: relative;
+				color: #e0e0e0;
+				box-shadow: none; /* Remove box shadow for fullscreen */
+				display: flex;
+				flex-direction: column;
+				padding: 0; /* Remove padding */
+			}
 
-        .modal-header {
-            font-size: 1.8em;
-            color: #49ed00;
-            margin-bottom: 20px;
-        }
+			.modal-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 1.5em;
+				color: #49ed00;
+			}
 
-        .timer {
-            font-size: 1.2em;
-            color: #ff4d4d;
-            margin: 15px 0;
-        }
+			.modal-header .close {
+				cursor: pointer;
+				font-size: 1.8em;
+				color: #49ed00;
+				margin-right: 20px;
+			}
 
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #49ed00;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 0.8s linear infinite;
-            margin-top: 20px;
-            display: none;
-        }
+			.modal-header .close:hover {
+				color: rgba(73, 237, 0, 0.7);
+			}
 
-        iframe {
-            width: 100%;
-            height: 300px;
-            border: none;
-            border-radius: 8px;
-            display: none; /* Initially hidden until loaded */
-        }
+			iframe {
+				width: 100%;
+				height: 100%; /* Full height of modal content */
+				border: none;
+				margin-top: 0; /* Remove top margin */
+				box-shadow: none; /* Remove shadow */
+			}
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="modal" id="myModal">
-        <div class="modal-content">
-            <div class="modal-header">Advertisement</div>
-            <div class="timer" id="timer">Next ad in: 25s</div>
-            <div class="spinner" id="spinner"></div>
-            <iframe id="adIframe" src=""></iframe>
-        </div>
-    </div>
+			.spinner {
+				border: 4px solid rgba(0, 0, 0, 0.1);
+				border-top: 4px solid #49ed00;
+				border-radius: 50%;
+				width: 40px;
+				height: 40px;
+				animation: spin 0.8s linear infinite;
+				margin: 20px auto;
+				display: none;
+			}
 
-    <script>
-        // Ad URLs array
-        let adLinks = [
-            "https://www.profitablecpmrate.com/yx8nftwk?key=435d59ba13b4c320b96be95c5ff49dfe",
-            "https://www.profitablecpmrate.com/vw0ep2h1t0?key=1a7ee1d158eaca3d43ecf404d5dee09a",
-            "https://www.profitablecpmrate.com/aaj1qx3dc?key=71d97788a5c9f7a50a7a56ba0af0d85f",
-            "https://www.profitablecpmrate.com/xc6nhjzdf?key=a743afd7a76dc5a965a6df3af0f7764a",
-        ];
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
 
-        let currentAdIndex = 0;
-        const adDisplayTime = 25000; // Display each ad for 25 seconds
-        let countdown = adDisplayTime / 1000;
+			.nav-buttons {
+				display: flex;
+				justify-content: center;
+				margin-top: 15px;
+				margin-bottom: 30px;
+				gap: 30px;
+			}
 
-        const iframe = document.getElementById("adIframe");
-        const spinner = document.getElementById("spinner");
-        const timer = document.getElementById("timer");
+			.arrow-btn {
+				cursor: pointer;
+				font-size: 2em;
+				color: #ffffff;
+				background: none;
+				border: none;
+				transition: color 0.3s;
+			}
 
-        // Shuffle function for array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
+			.arrow-btn:hover {
+				color: #49ed00;
+			}
 
-        // Shuffle ads on page load
-        shuffleArray(adLinks);
+			.go-btn {
+				cursor: pointer;
+				font-family: "Orbitron", sans-serif;
+				font-size: 1.3em;
+				color: #ffffff;
+				background-color: #333;
+				padding: 10px 20px;
+				border-radius: 8px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				box-shadow: 0 0 8px rgba(73, 237, 0, 0.3);
+				transition: background-color 0.3s, color 0.3s;
+			}
 
-        // Function to load and display an ad
-        function loadAd() {
-            spinner.style.display = "block"; // Show spinner while loading
-            iframe.style.display = "none"; // Hide iframe until loaded
-            iframe.src = adLinks[currentAdIndex];
+			.go-btn:hover {
+				background-color: #49ed00;
+				color: #1a1a1a;
+			}
 
-            iframe.onload = () => {
-                spinner.style.display = "none"; // Hide spinner when loaded
-                iframe.style.display = "block"; // Show iframe
-            };
-        }
+			.fallback {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 1.5em; /* Increased font size for impact */
+				color: #ffffff; /* Keep the text color white for visibility */
+				text-align: center;
+				padding: 20px;
+				gap: 10px;
+				flex-direction: column;
+				animation: fadeIn 1s ease forwards; /* Fade-in effect */
+				text-shadow: 0 0 5px rgba(73, 237, 0, 0.6),
+					0 0 10px rgba(73, 237, 0, 0.4),
+					0 0 15px rgba(73, 237, 0, 0.2); /* Glowing effect */
+				transform: translateY(
+					10px
+				); /* Start slightly lower for effect */
+				animation: bounce 2s infinite; /* Bounce animation */
+			}
 
-        // Function to cycle to the next ad
-        function cycleAds() {
-            currentAdIndex = (currentAdIndex + 1) % adLinks.length; // Move to next ad
-            loadAd(); // Load new ad
-        }
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
 
-        // Countdown timer function
-        function startCountdown() {
-            countdown = adDisplayTime / 1000;
-            timer.textContent = `Next ad in: ${countdown}s`;
+			@keyframes bounce {
+				0%,
+				20%,
+				50%,
+				80%,
+				100% {
+					transform: translateY(0);
+				}
+				40% {
+					transform: translateY(-10px); /* Bounce effect */
+				}
+				60% {
+					transform: translateY(-5px); /* Bounce effect */
+				}
+			}
 
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                timer.textContent = `Next ad in: ${countdown}s`;
+			.show-modal-btn {
+				cursor: pointer;
+				font-family: "Orbitron", sans-serif;
+				font-size: 1.5em; /* Increased font size for impact */
+				color: #ffffff;
+				background-color: transparent; /* Make background transparent */
+				padding: 10px 20px;
+				border: 2px solid #49ed00; /* Green border */
+				border-radius: 10px; /* Slightly larger border radius */
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				box-shadow: 0 0 10px rgba(73, 237, 0, 0.5); /* Glow effect */
+				transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+				animation: pulse 1.5s infinite; /* Pulsating effect */
+			}
 
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    cycleAds();
-                    startCountdown();
-                }
-            }, 1000);
-        }
+			@keyframes pulse {
+				0%,
+				100% {
+					transform: scale(1); /* Normal size */
+					box-shadow: 0 0 15px rgba(73, 237, 0, 0.5); /* Glow effect */
+				}
+				50% {
+					transform: scale(1.05); /* Slightly larger */
+					box-shadow: 0 0 25px rgba(73, 237, 0, 0.7); /* Stronger glow */
+				}
+			}
 
-        // Start the ad cycle on page load
-        window.onload = function () {
-            loadAd(); // Load the first ad
-            startCountdown(); // Start countdown for cycling
-        };
-    </script>
-</body>
+			.show-modal-btn:hover {
+				color: #49ed00; /* Change text color to match the border */
+				background-color: rgba(
+					73,
+					237,
+					0,
+					0.2
+				); /* Add a light green background on hover */
+				transform: scale(1.1); /* Larger on hover */
+				box-shadow: 0 0 20px rgba(73, 237, 0, 0.8),
+					0 0 30px rgba(73, 237, 0, 0.5); /* Stronger glow on hover */
+				border-color: #49ed00; /* Keep the border color the same for visibility */
+			}
+		</style>
+		<script>
+			let links = [
+				"https://www.profitablecpmrate.com/yx8nftwk?key=435d59ba13b4c320b96be95c5ff49dfe",
+				"https://www.profitablecpmrate.com/vw0ep2h1t0?key=1a7ee1d158eaca3d43ecf404d5dee09a", // Dito ilalagay Direct Link
+				"https://www.profitablecpmrate.com/aaj1qx3dc?key=71d97788a5c9f7a50a7a56ba0af0d85f", // Dito ilalagay Direct Link
+				"https://www.profitablecpmrate.com/xc6nhjzdf?key=a743afd7a76dc5a965a6df3af0f7764a", // Dito ilalagay Direct Link
+			];
+			let currentIndex = 0;
+			let autoNavigateInterval;
+
+			function shuffleArray(array) {
+				for (let i = array.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[array[i], array[j]] = [array[j], array[i]];
+				}
+			}
+
+			function refreshPage(interval = 250000) {
+				setInterval(() => {
+					location.reload();
+				}, interval);
+			}
+
+			function showLink(index) {
+				const iframe = document.getElementById("modalIframe");
+				const modal = document.getElementById("myModal");
+				const spinner = document.getElementById("spinner");
+				iframe.src = links[index];
+				modal.style.display = "flex";
+				spinner.style.display = "block";
+				iframe.onload = () => {
+					spinner.style.display = "none";
+				};
+				clearInterval(autoNavigateInterval);
+				autoNavigateInterval = setInterval(() => {
+					navigate(1);
+				}, Math.floor(Math.random() * (40000 - 30000 + 1) + 30000));
+			} // <-- Missing closing brace added here
+
+			function navigate(direction) {
+				currentIndex =
+					(currentIndex + direction + links.length) % links.length;
+				showLink(currentIndex);
+			}
+
+			function goToSite() {
+				window.open(links[currentIndex], "_blank");
+			}
+
+			function closeModal() {
+				document.getElementById("myModal").style.display = "none";
+				document.getElementById("modalIframe").src = "";
+				document.getElementById("fallback").style.display = "flex";
+				clearInterval(autoNavigateInterval);
+			}
+
+			function reopenModal() {
+				showLink(currentIndex);
+			}
+
+			window.onload = function () {
+				shuffleArray(links);
+				refreshPage();
+				showLink(currentIndex);
+			};
+		</script>
+	</head>
+
+	<body>
+		<div class="modal" id="myModal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span>Explore Dimensions</span>
+					<span class="close" onclick="closeModal()">×</span>
+				</div>
+				<div class="spinner" id="spinner"></div>
+				<iframe id="modalIframe" src=""></iframe>
+				<div class="nav-buttons">
+					<button class="arrow-btn" onclick="navigate(-1)">
+						<i class="fas fa-arrow-left"></i>
+					</button>
+					<button class="go-btn" onclick="goToSite()">
+						Go <i class="fas fa-door-open"></i>
+					</button>
+					<button class="arrow-btn" onclick="navigate(1)">
+						<i class="fas fa-arrow-right"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="fallback" id="fallback">
+			<p>
+				The journey awaits. Click below to explore the next destination!
+			</p>
+			<button class="show-modal-btn" onclick="reopenModal()">
+				<i class="fas fa-eye"></i> Enter Portal
+			</button>
+		</div>
+	</body>
 </html>
+Share on: E-Mail Reddit Twitter Facebook Tumblr No ads today. Pixeldrain is
+currently funded by our subscribers! bolt Support Pixeldrain to help keep the
+project going Download limit used: 8.60 kB of 6.00 GBDownload limit used: 8.60
+kB of 6.00 GB
