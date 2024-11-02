@@ -147,7 +147,7 @@
 
         // Countdown timer function
         function startCountdown() {
-            countdown = adDisplayTime / 25000;
+            countdown = adDisplayTime / 1000;
             timer.textContent = `Next ad in: ${countdown}s`;
 
             const countdownInterval = setInterval(() => {
