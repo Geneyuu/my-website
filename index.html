@@ -2,181 +2,103 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>OMG</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-		/>
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<title>Auto Refresh and Link Loop</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f0f0f0;
+				margin: 0;
+				padding: 20px;
+			}
 
-	body {
-		font-family: "Georgia", serif;
-		background-color: #f7f7f7;
-		color: #333;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100vh;
-		overflow: hidden;
-	}
+			h1 {
+				text-align: center;
+				color: #333;
+			}
 
-	.modal {
-		display: none;
-		position: fixed;
-		z-index: 1000;
-		left: 0;
-		top: 0;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.5);
-		align-items: center;
-		justify-content: center;
-	}
+			.modal {
+				display: none;
+				position: fixed;
+				z-index: 1;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				overflow: auto;
+				background-color: rgba(0, 0, 0, 0.8);
+				padding-top: 60px;
+			}
 
-	.modal-content {
-		background-color: #ffffff;
-		width: 80%;
-		max-width: 800px;
-		height: 80%;
-		border-radius: 8px;
-		text-align: center;
-		position: relative;
-		color: #333;
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
-	}
+			.modal-content {
+				background-color: #fff;
+				margin: 5% auto;
+				padding: 20px;
+				border: 1px solid #888;
+				width: 80%;
+				border-radius: 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			}
 
-	.modal-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 1.2em;
-		padding: 15px 20px;
-		border-bottom: 1px solid #ddd;
-		background-color: #f8f9fa;
-	}
+			.close {
+				color: #aaa;
+				float: right;
+				font-size: 28px;
+				font-weight: bold;
+			}
 
-	.modal-header .close {
-		cursor: pointer;
-		font-size: 1.5em;
-		color: #333;
-	}
+			.close:hover,
+			.close:focus {
+				color: black;
+				text-decoration: none;
+				cursor: pointer;
+			}
 
-	iframe {
-		width: 100%;
-		height: calc(100% - 60px);
-		border: none;
-	}
+			iframe {
+				border: none;
+				height: 400px;
+				width: 100%;
+			}
 
-	.spinner {
-		border: 4px solid rgba(0, 0, 0, 0.1);
-		border-top: 4px solid #333;
-		border-radius: 50%;
-		width: 30px;
-		height: 30px;
-		animation: spin 0.8s linear infinite;
-		margin: 20px auto;
-		display: none;
-	}
+			.link-container {
+				background: #fff;
+				border-radius: 8px;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+				margin: 20px 0;
+				padding: 20px;
+				transition: transform 0.3s;
+			}
 
-	@keyframes spin {
-		to {
-			transform: rotate(360deg);
-		}
-	}
+			.link-container:hover {
+				transform: scale(1.02);
+			}
 
-	.nav-buttons {
-		display: flex;
-		justify-content: space-around;
-		padding: 10px 20px;
-		background-color: #f8f9fa;
-		border-top: 1px solid #ddd;
-	}
+			.link-title {
+				font-size: 24px;
+				color: #333;
+			}
 
-	.arrow-btn {
-		cursor: pointer;
-		font-size: 1.5em;
-		color: #333;
-		background: none;
-		border: none;
-		transition: color 0.3s;
-	}
+			.link-description {
+				font-size: 16px;
+				color: #666;
+			}
 
-	.arrow-btn:hover {
-		color: #007bff;
-	}
+			.watch-button {
+				background-color: #007bff;
+				color: white;
+				border: none;
+				padding: 10px 15px;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: background-color 0.3s;
+			}
 
-	.go-btn {
-		cursor: pointer;
-		font-family: "Georgia", serif;
-		font-size: 1.1em;
-		color: #ffffff;
-		background-color: #007bff;
-		padding: 10px 20px;
-		border-radius: 4px;
-		border: none;
-		transition: background-color 0.3s;
-	}
-
-	.go-btn:hover {
-		background-color: #0056b3;
-	}
-
-	.fallback {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 1.2em;
-		color: #333;
-		text-align: center;
-		padding: 20px;
-		flex-direction: column;
-		gap: 15px;
-	}
-
-	.show-modal-btn {
-		cursor: pointer;
-		font-family: "Georgia", serif;
-		font-size: 1.2em;
-		color: #007bff;
-		background-color: transparent;
-		padding: 8px 16px;
-		border: 2px solid #007bff;
-		border-radius: 4px;
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-	}
-
-	.show-modal-btn:hover {
-		color: #ffffff;
-		background-color: #007bff;
-		border-color: #0056b3;
-	}
-</style>
+			.watch-button:hover {
+				background-color: #0056b3;
+			}
+		</style>
 		<script>
-			let links = [
-				"https://www.profitablecpmrate.com/ey3e7hyu7?key=80a3548e6330771240bef3d844f1694a", // Dito ilalagay Direct Link
-				"https://www.profitablecpmrate.com/zk7i1iy8j?key=519aaf3d4eb75c7877b0563be04b67a5", // Dito ilalagay Direct Link
-				"https://www.profitablecpmrate.com/s7tye4cxj?key=2bbe019fcc3e1813052a864cd31dd378", // Dito ilalagay Direct Link
-				"https://www.profitablecpmrate.com/j3nf3k4yvj?key=2df629647a0d16b11f595e968a2c2c4c", // Dito ilalagay Direct Link
-			];
-			let currentIndex = 0;
-			let autoNavigateInterval;
-
+			// Function to shuffle an array randomly
 			function shuffleArray(array) {
 				for (let i = array.length - 1; i > 0; i--) {
 					const j = Math.floor(Math.random() * (i + 1));
@@ -184,86 +106,80 @@
 				}
 			}
 
-			function refreshPage(interval = 350000) {
-				setInterval(() => {
+			// Function to refresh the page at a fixed interval
+			function refreshPage() {
+				var refreshInterval = 300000; // 250 seconds
+				setInterval(function () {
 					location.reload();
-				}, interval);
+				}, refreshInterval);
 			}
 
-			function showLink(index) {
-				const iframe = document.getElementById("modalIframe");
-				const modal = document.getElementById("myModal");
-				const spinner = document.getElementById("spinner");
-				iframe.src = links[index];
-				modal.style.display = "flex";
-				spinner.style.display = "block";
-				iframe.onload = () => {
-					spinner.style.display = "none";
+			// Function to perform the link loop
+			function executeLoop() {
+				var links = [
+					"https://www.profitablecpmrate.com/ey3e7hyu7?key=80a3548e6330771240bef3d844f1694a", // Dito ilalagay Direct Link
+					"https://www.profitablecpmrate.com/zk7i1iy8j?key=519aaf3d4eb75c7877b0563be04b67a5", // Dito ilalagay Direct Link
+					"https://www.profitablecpmrate.com/s7tye4cxj?key=2bbe019fcc3e1813052a864cd31dd378", // Dito ilalagay Direct Link
+					"https://www.profitablecpmrate.com/j3nf3k4yvj?key=2df629647a0d16b11f595e968a2c2c4c", // Dito ilalagay Direct Link
+				];
+				// Shuffle the array randomly
+				shuffleArray(links);
+				var currentIndex = 0;
+
+				function openLink() {
+					var link = links[currentIndex];
+					// Display the link in the modal
+					openModalWithLink(link);
+
+					var interval = Math.floor(
+						Math.random() * (30000 - 20000 + 1) + 20000
+					);
+					// Close the modal after the specified interval
+					setTimeout(function () {
+						closeModal();
+						// Move to the next link
+						currentIndex = (currentIndex + 1) % links.length;
+						// Call openLink again with the updated index
+						openLink();
+					}, interval);
+				}
+				// Initial execution
+				openLink();
+			}
+
+			// Function to open the modal with a given link
+			function openModalWithLink(link) {
+				document.getElementById("modalIframe").src = link;
+				// Explicitly load the iframe after setting the source
+				document.getElementById("modalIframe").onload = function () {
+					document.getElementById("myModal").style.display = "block";
 				};
-				clearInterval(autoNavigateInterval);
-				autoNavigateInterval = setInterval(() => {
-					navigate(1);
-				}, Math.floor(Math.random() * (40000 - 30000 + 1) + 30000));
-			} // <-- Missing closing brace added here
-
-			function navigate(direction) {
-				currentIndex =
-					(currentIndex + direction + links.length) % links.length;
-				showLink(currentIndex);
 			}
 
-			function goToSite() {
-				window.open(links[currentIndex], "_blank");
-			}
-
+			// Function to close the modal
 			function closeModal() {
 				document.getElementById("myModal").style.display = "none";
-				document.getElementById("modalIframe").src = "";
-				document.getElementById("fallback").style.display = "flex";
-				clearInterval(autoNavigateInterval);
 			}
 
-			function reopenModal() {
-				showLink(currentIndex);
-			}
-
+			// Initial execution
 			window.onload = function () {
-				shuffleArray(links);
-				refreshPage();
-				showLink(currentIndex);
+				refreshPage(); // Start the page refresh
+				executeLoop(); // Start the link loop
 			};
 		</script>
 	</head>
 
 	<body>
+		<h1>Movie Blog Site</h1>
+		<div id="linkContainer" class="link-container"></div>
+
+		<!-- The Modal -->
 		<div class="modal" id="myModal">
 			<div class="modal-content">
-				<div class="modal-header">
-					<span>Explore Dimensions</span>
-					<span class="close" onclick="closeModal()">×</span>
-				</div>
-				<div class="spinner" id="spinner"></div>
+				<span class="close" onclick="closeModal()">&times;</span>
+				<!-- Content of the modal -->
 				<iframe id="modalIframe" src=""></iframe>
-				<div class="nav-buttons">
-					<button class="arrow-btn" onclick="navigate(-1)">
-						<i class="fas fa-arrow-left"></i>
-					</button>
-					<button class="go-btn" onclick="goToSite()">
-						Go <i class="fas fa-door-open"></i>
-					</button>
-					<button class="arrow-btn" onclick="navigate(1)">
-						<i class="fas fa-arrow-right"></i>
-					</button>
-				</div>
 			</div>
-		</div>
-		<div class="fallback" id="fallback">
-			<p>
-				The journey awaits. Click below to explore the next destination!
-			</p>
-			<button class="show-modal-btn" onclick="reopenModal()">
-				<i class="fas fa-eye"></i> Enter Portal
-			</button>
 		</div>
 	</body>
 </html>
