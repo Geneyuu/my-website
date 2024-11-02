@@ -46,9 +46,18 @@
             iframe.src = links[index];
             modal.style.display = "flex";
             spinner.style.display = "block";
+
+            // Hide spinner when iframe loads successfully
             iframe.onload = () => {
                 spinner.style.display = "none";
             };
+
+            // Open link in a new tab if iframe fails to load
+            iframe.onerror = () => {
+                window.open(links[index], "_blank");
+                closeModal(); // Close the modal after opening the link
+            };
+
             clearInterval(autoNavigateInterval);
             autoNavigateInterval = setInterval(() => {
                 navigate(1);
