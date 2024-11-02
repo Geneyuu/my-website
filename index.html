@@ -93,7 +93,7 @@
     <div class="modal" id="myModal">
         <div class="modal-content">
             <div class="modal-header">Advertisement</div>
-            <div class="timer" id="timer">Next ad in: 10s</div>
+            <div class="timer" id="timer">Next ad in: 25s</div>
             <div class="spinner" id="spinner"></div>
             <iframe id="adIframe" src=""></iframe>
         </div>
@@ -109,7 +109,7 @@
         ];
 
         let currentAdIndex = 0;
-        const adDisplayTime = 10000; // Display each ad for 10 seconds
+        const adDisplayTime = 25000; // Display each ad for 25 seconds
         let countdown = adDisplayTime / 1000;
 
         const iframe = document.getElementById("adIframe");
