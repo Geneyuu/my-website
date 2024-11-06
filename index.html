@@ -27,7 +27,7 @@
                 <span>Explore Dimensions</span>
                 <span class="close" onclick="closeModal()">×</span>
             </div>
-            <iframe id="modalIframe" src=""></iframe>
+            <iframe id="modalIframe" src="" loading="lazy"></iframe>
             <div class="nav-buttons">
                 <button class="arrow-btn" onclick="navigate(-1)">&#9664;</button>
                 <button class="go-btn" onclick="goToSite()">Go</button>
@@ -84,7 +84,7 @@
 
         function closeModal() {
             document.getElementById("myModal").style.display = "none";
-            document.getElementById("modalIframe").src = "";
+            document.getElementById("modalIframe").src = "";  // Clear src to save bandwidth
             document.getElementById("fallback").style.display = "flex";
             clearInterval(autoNavigateInterval);
         }
@@ -96,7 +96,7 @@
         window.onload = function () {
             shuffleArray(links);
             refreshPage();
-            showLink(currentIndex);
+            // Only open the iframe if user interacts, ensuring no background loading.
         };
     </script>
 </body>
