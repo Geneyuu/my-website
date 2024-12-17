@@ -31,13 +31,10 @@
         nav a:hover {
             text-decoration: underline;
         }
-        .banner {
+        .banner, .native-banner, .social-bar, .popunder {
             width: 100%;
-            height: 300px;
-            overflow: hidden;
-            position: relative;
         }
-        .banner iframe {
+        .banner iframe, .native-banner iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -66,6 +63,30 @@
         footer a:hover {
             text-decoration: underline;
         }
+        .social-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #333;
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .social-bar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 20px;
+        }
+        .external-banner {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .external-banner img {
+            width: 728px;
+            height: 90px;
+        }
     </style>
 </head>
 <body>
@@ -79,20 +100,45 @@
         </nav>
     </header>
 
+    <!-- Banner Ad Section -->
     <div class="banner">
-        <iframe src="https://www.profitablecpmrate.com/rq05my5chu?key=d59f28cff466ca49887e0f0bdb0679a1" scrolling="no"></iframe>
-        <iframe src="https://www.profitablecpmrate.com/q9b3n5irn?key=0dde911ae47c6fd057a010f7c71029ef" scrolling="no"></iframe>
-<!--         <iframe src="https://www.profitablecpmrate.com/f6p5ntpya?key=04888bc64e376bb9190a8dedc50cdeee" scrolling="no"></iframe>
-        <iframe src="https://www.profitablecpmrate.com/zr5jpmycm?key=c18ca5571388eca9d2b400c258135fd8" scrolling="no"></iframe>
-        <iframe src="https://www.profitablecpmrate.com/nfu7jraj5?key=509cfcdbb7a67b25a8ba2cf02a84358d" scrolling="no"></iframe> -->
+        <iframe src="https://supersedeasserted.com/wruhzpbchw?key=b78a88147fbfe6d44f72979c67e5a5c1" scrolling="no"></iframe>
     </div>
 
+    <!-- Native Banner Ad -->
+    <div class="native-banner">
+        <iframe src="https://supersedeasserted.com/q9b3n5irn?key=0dde911ae47c6fd057a010f7c71029ef" scrolling="no"></iframe>
+    </div>
+
+    <!-- External Banner Ad -->
+    <div class="external-banner">
+        <a href="" rel="nofollow">
+            <img alt="banner" src="https://landings-cdn.adsterratech.com/referralBanners/png/728%20x%2090%20px.png" />
+        </a>
+    </div>
+
+    <!-- Main Content -->
     <div class="content">
         <h2>Welcome to My Website</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Integer porttitor eros eu odio facilisis, ut posuere eros suscipit.</p>
         <p>Donec dapibus nisi sit amet tristique convallis. Nunc eget nulla id metus accumsan elementum a nec sapien.</p>
     </div>
 
+    <!-- Popunder Script -->
+    <script>
+        document.addEventListener('click', function() {
+            window.open("https://supersedeasserted.com/rq05my5chu?key=d59f28cff466ca49887e0f0bdb0679a1", "_blank");
+        });
+    </script>
+
+    <!-- Social Sharing Bar -->
+    <div class="social-bar">
+        <a href="https://supersedeasserted.com/rq05my5chu?key=d59f28cff466ca49887e0f0bdb0679a1" target="_blank">Facebook</a>
+        <a href="https://supersedeasserted.com/rq05my5chu?key=d59f28cff466ca49887e0f0bdb0679a1" target="_blank">Twitter</a>
+        <a href="https://supersedeasserted.com/rq05my5chu?key=d59f28cff466ca49887e0f0bdb0679a1" target="_blank">Instagram</a>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <p>&copy; 2024 My Awesome Website | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </footer>
